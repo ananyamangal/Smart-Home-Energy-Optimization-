@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body className={inter.className} data-testid="root-layout-body">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <div className="flex h-screen">
             {/* Sidebar */}
