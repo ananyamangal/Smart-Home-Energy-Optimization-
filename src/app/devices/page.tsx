@@ -161,33 +161,36 @@ const pastDevices = [
     image: "/placeholder.svg?height=80&width=80",
   },
 ]
-
 // Energy usage colors
-const getEnergyColor = (usage) => {
+const getEnergyColor = (usage: string): string => {
   switch (usage) {
     case "Very Low":
-      return "bg-green-500"
+      return "bg-green-500";
     case "Low":
-      return "bg-green-400"
+      return "bg-green-400";
     case "Medium":
-      return "bg-yellow-400"
+      return "bg-yellow-400";
     case "High":
-      return "bg-orange-500"
+      return "bg-orange-500";
     case "Very High":
-      return "bg-red-500"
+      return "bg-red-500";
     default:
-      return "bg-blue-500"
+      return "bg-blue-500";
   }
-}
+};
 
-// Battery icon based on level
-const getBatteryIcon = (level) => {
-  if (level === null) return <BatteryCharging className="h-5 w-5 text-green-500" />
-  if (level > 80) return <BatteryFull className="h-5 w-5 text-green-500" />
-  if (level > 50) return <BatteryMedium className="h-5 w-5 text-yellow-500" />
-  if (level > 20) return <BatteryLow className="h-5 w-5 text-orange-500" />
-  return <BatteryWarning className="h-5 w-5 text-red-500" />
-}
+const getBatteryIcon = (level: number | null) => {
+  if (level === null)
+    return <BatteryCharging className="h-5 w-5 text-green-500" />;
+  if (level > 80)
+    return <BatteryFull className="h-5 w-5 text-green-500" />;
+  if (level > 50)
+    return <BatteryMedium className="h-5 w-5 text-yellow-500" />;
+  if (level > 20)
+    return <BatteryLow className="h-5 w-5 text-orange-500" />;
+  return <BatteryWarning className="h-5 w-5 text-red-500" />;
+};
+
 
 export default function DevicesPage() {
   const [viewMode, setViewMode] = useState("grid")
