@@ -39,23 +39,7 @@ export function Navbar() {
         {/* Logo and Title removed */}
 
         <div className="flex flex-1 items-center justify-end gap-4">
-          {showSearch ? (
-            <div className="relative flex-1 max-w-sm mr-4">
-              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input
-                type="search"
-                placeholder="Search..."
-                className="w-full pl-8 md:w-[300px] lg:w-[400px]"
-                onBlur={() => setShowSearch(false)}
-                autoFocus
-              />
-            </div>
-          ) : (
-            <Button variant="ghost" size="icon" className="mr-2" onClick={() => setShowSearch(true)}>
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
-            </Button>
-          )}
+          
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -91,9 +75,8 @@ export function Navbar() {
                 </DropdownMenuItem>
               </div>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer justify-center text-sm font-medium">
-                View all notifications
-              </DropdownMenuItem>
+             
+
             </DropdownMenuContent>
           </DropdownMenu>
 

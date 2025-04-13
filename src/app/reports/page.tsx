@@ -117,47 +117,8 @@ export default function ReportsPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex flex-wrap items-center gap-2">
-            <Select defaultValue="monthly">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select timeframe" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="daily">Daily</SelectItem>
-                <SelectItem value="weekly">Weekly</SelectItem>
-                <SelectItem value="monthly">Monthly</SelectItem>
-                <SelectItem value="yearly">Yearly</SelectItem>
-              </SelectContent>
-            </Select>
+     
 
-            <Button variant="outline" size="icon">
-              <RefreshCw className="h-4 w-4" />
-              <span className="sr-only">Refresh data</span>
-            </Button>
-
-            <Button variant="outline" size="icon">
-              <Filter className="h-4 w-4" />
-              <span className="sr-only">Filter</span>
-            </Button>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2">
-            <Button variant="outline" size="sm" onClick={handleDownloadReport}>
-              <Download className="mr-2 h-4 w-4" />
-              Download Report
-            </Button>
-
-            <Button variant="outline" size="sm">
-              <Printer className="mr-2 h-4 w-4" />
-              Print
-            </Button>
-
-            <Button variant="outline" size="sm">
-              <Share2 className="mr-2 h-4 w-4" />
-              Share
-            </Button>
-          </div>
         </div>
 
         <Tabs defaultValue="overview" className="w-full">
@@ -227,28 +188,8 @@ export default function ReportsPage() {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-blue-700">Daily Energy Usage Pattern</CardTitle>
-                <CardDescription>Energy consumption throughout the day</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-[300px] w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={hourlyEnergyData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="time" />
-                      <YAxis />
-                      <Tooltip
-                        formatter={(value) => [`${value} kWh`, "Energy Usage"]}
-                        labelFormatter={(label) => `Time: ${label}`}
-                      />
-                      <Line type="monotone" dataKey="usage" stroke="#3b82f6" strokeWidth={2} dot={{ r: 4 }} />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-              </CardContent>
-            </Card>
+            
+              
           </TabsContent>
 
           <TabsContent value="rooms" className="space-y-6">
@@ -554,6 +495,5 @@ export default function ReportsPage() {
           </TabsContent>
         </Tabs>
       </div>
-    </div>
   )
 }

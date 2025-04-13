@@ -35,7 +35,7 @@ export default function AboutUsPage() {
               className="rounded-full mx-auto object-cover shadow-md border-4 border-blue-300"
             />
             <h3 className="mt-6 text-2xl font-semibold text-gray-800">Ananya Mangal</h3>
-            <p className="text-gray-500">Frontend Developer & AI Engineer</p>
+            <p className="text-gray-500">Full Stack Developer & AI/ML Engineer</p>
           </div>
 
           {/* Developer 2 */}
@@ -48,7 +48,7 @@ export default function AboutUsPage() {
               className="rounded-full mx-auto object-cover shadow-md border-4 border-blue-300"
             />
             <h3 className="mt-6 text-2xl font-semibold text-gray-800">Aarush Rajoura</h3>
-            <p className="text-gray-500">Backend Developer & DevOps</p>
+            <p className="text-gray-500">Backend Developer & AI/ML engineer</p>
           </div>
         </div>
       </section>

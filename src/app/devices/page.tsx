@@ -287,10 +287,7 @@ export default function DevicesPage() {
               <TabsTrigger value="past">Past Devices</TabsTrigger>
             </TabsList>
 
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              <Plus className="mr-2 h-4 w-4" />
-              Add Device
-            </Button>
+            
           </div>
 
           <TabsContent value="current" className="space-y-6">

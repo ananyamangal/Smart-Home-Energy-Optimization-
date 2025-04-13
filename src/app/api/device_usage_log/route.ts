@@ -133,7 +133,6 @@ export async function POST(req: Request) {
         await connection.end()
         return NextResponse.json({ deviceData: deviceUsageRows })
 
-      // ✅ Fetch 8 random devices with latest status and usage
       case 'latest_devices':
         query = `
           SELECT 
@@ -161,6 +160,28 @@ export async function POST(req: Request) {
         await connection.end()
         return NextResponse.json({ devices: latestDevices })
 
+      case 'monthly_usage':
+        query = `
+          SELECT 
+            DATE_FORMAT(timestamp, '%b') AS month,
+            SUM(power_consumption) AS usage
+          FROM device_usage_log
+          GROUP BY MONTH(timestamp)
+          ORDER BY MONTH(timestamp)
+        `
+        const [monthlyRows] = await connection.execute(query)
+
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        const usageMap = new Map((monthlyRows as any[]).map(row => [row.month, Math.round(row.usage || 0)]))
+
+        const monthlyData = months.map(month => ({
+          name: month,
+          usage: usageMap.get(month) || 0,
+        }))
+
+        await connection.end()
+        return NextResponse.json({ monthlyData })
+
       default:
         return NextResponse.json({ error: 'Unknown query type' }, { status: 400 })
     }
@@ -183,6 +204,7 @@ export async function POST(req: Request) {
     } else {
       return NextResponse.json({ error: 'No data found' }, { status: 404 })
     }
+
   } catch (error) {
     console.error(error)
     return NextResponse.json({ error: 'Database error' }, { status: 500 })
