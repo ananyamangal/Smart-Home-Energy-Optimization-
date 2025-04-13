@@ -1,50 +1,25 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Cell,
-  Legend,
-  Line,
   LineChart,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
+  Line,
   XAxis,
   YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Cell,
+  PieChart,
+  Pie
 } from "recharts"
 
-
-// Mock data for charts
-const hourlyData = [
-  { hour: "12 AM", consumption: 0.8 },
-  { hour: "2 AM", consumption: 0.5 },
-  { hour: "4 AM", consumption: 0.3 },
-  { hour: "6 AM", consumption: 0.7 },
-  { hour: "8 AM", consumption: 1.2 },
-  { hour: "10 AM", consumption: 1.5 },
-  { hour: "12 PM", consumption: 1.8 },
-  { hour: "2 PM", consumption: 1.6 },
-  { hour: "4 PM", consumption: 1.9 },
-  { hour: "6 PM", consumption: 2.3 },
-  { hour: "8 PM", consumption: 2.0 },
-  { hour: "10 PM", consumption: 1.2 },
-]
-
-const roomData = [
-  { room: "Living Room", consumption: 4.2 },
-  { room: "Kitchen", consumption: 3.8 },
-  { room: "Master Bedroom", consumption: 2.5 },
-  { room: "Guest Room", consumption: 1.2 },
-  { room: "Bathroom", consumption: 0.8 },
-  { room: "Study", consumption: 1.5 },
-]
-
+// Static data for devices
 const deviceData = [
   { name: "AC", value: 45 },
   { name: "Heater", value: 20 },
@@ -54,16 +29,98 @@ const deviceData = [
   { name: "Other", value: 5 },
 ]
 
+const fallbackHourlyData = [
+  { hour: "00:00", consumption: 1.1 },
+  { hour: "01:00", consumption: 1.3 },
+  { hour: "02:00", consumption: 0.9 },
+  { hour: "03:00", consumption: 1.0 },
+  { hour: "04:00", consumption: 1.4 },
+  { hour: "05:00", consumption: 1.6 },
+  { hour: "06:00", consumption: 1.2 },
+]
+
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8", "#82ca9d"]
 
 export function EnergyCharts() {
   const [activeTab, setActiveTab] = useState("hourly")
+  const [hourlyData, setHourlyData] = useState<any[]>([])
+  const [roomUsage, setRoomUsage] = useState<any[]>([])
+
+  useEffect(() => {
+    if (activeTab === "hourly") {
+      const fetchHourlyUsage = async () => {
+        try {
+          const response = await fetch("/api/device_usage_log", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "hourly_usage" }),
+          })
+
+          const data = await response.json()
+          console.log("Fetched hourly data:", data)
+
+          if (Array.isArray(data.hourlyData) && data.hourlyData.length > 0) {
+            setHourlyData(data.hourlyData)
+          } else {
+            console.warn("Using fallback hourly data")
+            setHourlyData(fallbackHourlyData)
+          }
+        } catch (error) {
+          console.error("Failed to fetch hourly usage:", error)
+          setHourlyData(fallbackHourlyData)
+        }
+      }
+
+      fetchHourlyUsage()
+    } else if (activeTab === "rooms") {
+      const fetchRoomUsage = async () => {
+        try {
+          const response = await fetch("/api/device_usage_log", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ type: "usage_by_room" }),
+          })
+
+          const data = await response.json()
+          console.log("Fetched room usage data:", data)
+
+          if (Array.isArray(data.roomData) && data.roomData.length > 0) {
+            setRoomUsage(data.roomData)
+          } else {
+            console.warn("Using fallback room data")
+            setRoomUsage([
+              { room: "Living Room", consumption: 4.2 },
+              { room: "Kitchen", consumption: 3.8 },
+              { room: "Master Bedroom", consumption: 2.5 },
+              { room: "Guest Room", consumption: 1.2 },
+              { room: "Bathroom", consumption: 0.8 },
+              { room: "Study", consumption: 1.5 },
+            ])
+          }
+        } catch (error) {
+          console.error("Failed to fetch room usage:", error)
+          setRoomUsage([
+            { room: "Living Room", consumption: 4.2 },
+            { room: "Kitchen", consumption: 3.8 },
+            { room: "Master Bedroom", consumption: 2.5 },
+            { room: "Guest Room", consumption: 1.2 },
+            { room: "Bathroom", consumption: 0.8 },
+            { room: "Study", consumption: 1.5 },
+          ])
+        }
+      }
+
+      fetchRoomUsage()
+    }
+  }, [activeTab])
 
   return (
     <Card className="shadow-md">
       <CardHeader>
         <CardTitle>Energy Consumption</CardTitle>
-        <CardDescription>View your energy usage patterns across different timeframes and categories</CardDescription>
+        <CardDescription>
+          View your energy usage patterns across different timeframes and categories
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Tabs defaultValue="hourly" className="space-y-4" onValueChange={setActiveTab}>
@@ -72,17 +129,14 @@ export function EnergyCharts() {
             <TabsTrigger value="rooms">Usage by Room</TabsTrigger>
             <TabsTrigger value="devices">Usage by Device</TabsTrigger>
           </TabsList>
+
+          {/* HOURLY USAGE */}
           <TabsContent value="hourly" className="space-y-4">
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                   data={hourlyData}
-                  margin={{
-                    top: 5,
-                    right: 10,
-                    left: 10,
-                    bottom: 5,
-                  }}
+                  margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="hour" />
@@ -105,17 +159,14 @@ export function EnergyCharts() {
               </ResponsiveContainer>
             </div>
           </TabsContent>
+
+          {/* ROOMS USAGE */}
           <TabsContent value="rooms" className="space-y-4">
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
-                  data={roomData}
-                  margin={{
-                    top: 5,
-                    right: 10,
-                    left: 10,
-                    bottom: 5,
-                  }}
+                  data={roomUsage}
+                  margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="room" />
@@ -130,6 +181,8 @@ export function EnergyCharts() {
               </ResponsiveContainer>
             </div>
           </TabsContent>
+
+          {/* DEVICES USAGE */}
           <TabsContent value="devices" className="space-y-4">
             <div className="h-[300px]">
               <ResponsiveContainer width="100%" height="100%">
