@@ -41,7 +41,7 @@ const fallbackHourlyData = [
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8", "#82ca9d"]
 
-const BACKEND_URL = "http://localhost:8000/api";
+const BACKEND_URL = "https://smart-home-energy-optimization.onrender.com/api";
 
 export function EnergyCharts() {
   const [activeTab, setActiveTab] = useState("hourly")

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Activity, Clock, Cpu, DollarSign } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-const BACKEND_URL = "http://localhost:8000/api";
+const BACKEND_URL = "https://smart-home-energy-optimization.onrender.com/api";
 
 export function OverviewCards() {
   const [totalEnergy, setTotalEnergy] = useState<number | null>(null);
