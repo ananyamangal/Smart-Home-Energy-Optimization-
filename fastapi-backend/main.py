@@ -24,8 +24,8 @@ def get_db_connection():
         user=os.getenv("DB_USER", "root"),
         password=os.getenv("DB_PASSWORD", "mysql"),
         database=os.getenv("DB_NAME", "SmartHomeEnergyUsageDB"),
+        port=int(os.getenv("DB_PORT", 3306)),  # <-- Add this line!
     )
-
 # --- Simple GET endpoints ---
 
 @app.get("/api/devices")
