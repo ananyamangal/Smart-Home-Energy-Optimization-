@@ -1,0 +1,11 @@
+user_id,preferred_temperature,preferred_humidity,auto_adjust_enabled
+user_1,24.07,51.95,1
+user_2,20.12,52.32,0
+user_3,21.94,46.58,1
+user_4,20.55,44.91,0
+user_5,23.85,46.74,0
+user_6,21.03,44.49,1
+user_7,23.64,48.34,0
+user_8,24.45,41.25,0
+user_9,23.92,59.42,0
+user_10,23.37,42.4,0
