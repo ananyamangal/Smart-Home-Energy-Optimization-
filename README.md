@@ -41,5 +41,40 @@ SYNERGY is a data-driven smart home energy optimization system that leverages re
 - Multi-language support for accessibility.
 - Integration with Alexa, Google Home, and other smart assistants.
 
-## 📂 Project Structure
+## 🚀 Deployment
 
+- **Backend**: Developed using **FastAPI**, hosted on **Render**.
+- **Database**: **MySQL** database provisioned on **Railway**.
+- **Frontend**: Built with **Next.js**, deployed on **Vercel**.
+- The backend connects securely to the cloud database using environment variables.
+- The frontend communicates with the backend via a public API URL.
+
+## 🛠️ Running Locally
+
+Follow the steps below to set up the project on your local machine.
+
+### 1. Set Up the MySQL Database
+- Install MySQL.
+- Create a new database (e.g., `SmartHomeEnergyUsageDB`).
+- Import the provided `.sql` file to create tables and insert sample data.
+
+### 2. Backend Setup
+
+```bash
+cd fastapi-backend
+Create a .env file in the backend directory with your database credentials:
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=yourpassword
+DB_NAME=SmartHomeEnergyUsageDB
+```  
+Install dependencies:
+```bash
+pip install -r requirements.txt
+uvicorn main:app --reload
+```  
+### 3. Frontend Setup
+```bash
+npm install
+npm run dev
+```  
