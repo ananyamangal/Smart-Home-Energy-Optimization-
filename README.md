@@ -24,6 +24,14 @@ SYNERGY is a data-driven smart home energy optimization system that leverages re
 
 ## 🧠 System Architecture
 
+
+| Layer                | Technology Stack         | Description                                                        |
+|----------------------|-------------------------|--------------------------------------------------------------------|
+| **Data Collection**  | IoT Sensors + MySQL     | Continuous data from sensors stored in a central MySQL database.   |
+| **ML Backend**       | Scikit-learn, XGBoost   | Forecasting, anomaly detection, optimization models, NLP based recommendation module           |
+| **API Layer**        | FastAPI (RESTful)       | Connects backend, ML models, and frontend for seamless data flow.  |
+| **Frontend**         | Next.js                 | Real-time visualizations and user interactions.                    |
+
 - **Data Collection**  
   IoT sensors feed continuous data into a central MySQL database.
 
